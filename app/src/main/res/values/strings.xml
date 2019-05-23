@@ -2,4 +2,8 @@
     <string name="app_name">android-lab</string>
     <string name="dodaj">Dodaj</string>
     <string name="nowy">Nowy</string>
+    <string name="wielko">Wielkość</string>
+    <string name="opis">Opis</string>
+    <string name="gatunek">Gatunek</string>
+    <string name="kolor">Kolor</string>
 </resources>
