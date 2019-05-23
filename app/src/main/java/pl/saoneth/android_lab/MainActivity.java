@@ -6,8 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     private MySQLite db;
@@ -26,6 +29,19 @@ public class MainActivity extends AppCompatActivity {
 
         ListView listview = findViewById(R.id.listView);
         listview.setAdapter(this.adapter);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapter, View view, int pos, long id) {
+                TextView name = view.findViewById(android.R.id.text1);
+
+                Animal zwierz = db.pobierz(Integer.parseInt(name.getText().toString()));
+
+                Intent intencja = new Intent(getApplicationContext(), DodajWpis.class);
+                intencja.putExtra("element", zwierz);
+                startActivityForResult(intencja, 2);
+            }
+        });
     }
 
     @Override
@@ -42,13 +58,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode != 1 || resultCode != RESULT_OK) {
+        if ((requestCode != 1 && requestCode != 2) || resultCode != RESULT_OK) {
             return;
         }
 
         Bundle extras = data.getExtras();
         Animal nowy = (Animal) extras.getSerializable("nowy");
-        this.db.dodaj(nowy);
+
+        if (requestCode == 2) {
+            this.db.aktualizuj(nowy);
+        } else {
+            this.db.dodaj(nowy);
+        }
 
         adapter.changeCursor(db.lista());
         adapter.notifyDataSetChanged();
