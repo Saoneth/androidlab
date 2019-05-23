@@ -25,7 +25,7 @@ public class Animal implements Serializable {
         return "Zwierze: [_id=" + _id + ", gatunek" + gatunek + ", kolor=" + kolor + ", wielkosc=" + wielkosc + " ]";
     }
 
-    public int get_id() {
+    public int getId() {
         return _id;
     }
 
@@ -43,5 +43,9 @@ public class Animal implements Serializable {
 
     public String getOpis() {
         return opis;
+    }
+
+    public void setId(int id) {
+        this._id = id;
     }
 }
