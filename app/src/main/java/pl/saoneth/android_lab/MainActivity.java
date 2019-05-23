@@ -1,20 +1,17 @@
 package pl.saoneth.android_lab;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import android.widget.SimpleCursorAdapter;
 
 public class MainActivity extends AppCompatActivity {
-    private ArrayList<String> target;
-    private ArrayAdapter adapter;
+    private MySQLite db;
+    private SimpleCursorAdapter adapter;
 
     // To-do: reszta aplikacji
 
@@ -23,10 +20,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String[] values = new String[]{"Pies", "Kot", "Koń", "Gołąb", "Kruk", "Dzik", "Karp", "Osioł", "Chomik", "Mysz", "Jeż", "Kraluch"};
-        this.target = new ArrayList<>();
-        this.target.addAll(Arrays.asList(values));
-        this.adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, this.target);
+        db = new MySQLite(this);
+
+        this.adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_2, db.lista(), new String[]{"_id", "gatunek"}, new int[]{android.R.id.text1, android.R.id.text2}, SimpleCursorAdapter.IGNORE_ITEM_VIEW_TYPE);
 
         ListView listview = findViewById(R.id.listView);
         listview.setAdapter(this.adapter);
@@ -52,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         Bundle extras = data.getExtras();
         String nowy = (String)extras.get("wpis");
-        target.add(nowy);
+        //target.add(nowy);
         adapter.notifyDataSetChanged();
     }
 
