@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">android-lab</string>
+    <string name="dodaj">Dodaj</string>
+    <string name="nowy">Nowy</string>
 </resources>
