@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
+    // To-do: reszta aplikacji
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
